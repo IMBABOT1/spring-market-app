@@ -20,7 +20,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             url: contextPath + '/products/change_price',
             method: 'GET',
             params: {
-                studentId: productId,
+                productId: productId,
                 delta: delta
             }
         }).then(function (response) {

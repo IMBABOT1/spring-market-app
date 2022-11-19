@@ -38,6 +38,16 @@ public class ProductRepository {
         throw new RuntimeException("Product with id: " + id + "not found");
     }
 
+    public void deleteProductById(Long id) {
+        for (Product p : products){
+            if (p.getId() == id){
+                products.remove(p);
+                return;
+            }
+        }
+        throw new RuntimeException("Product with id: " + id + " not found");
+    }
+
     public List<Product> findAll(){
         return Collections.unmodifiableList(products);
     }
