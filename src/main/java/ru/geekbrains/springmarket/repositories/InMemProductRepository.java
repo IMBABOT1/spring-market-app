@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Repository
-public class ProductRepository {
+public class InMemProductRepository implements ProductDao {
 
 
     private List<Product> products;

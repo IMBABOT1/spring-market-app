@@ -3,18 +3,20 @@ package ru.geekbrains.springmarket.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.springmarket.entities.Product;
-import ru.geekbrains.springmarket.repositories.ProductRepository;
+import ru.geekbrains.springmarket.repositories.InMemProductRepository;
+import ru.geekbrains.springmarket.repositories.ProductDao;
+import ru.geekbrains.springmarket.repositories.ProductDaoImpl;
 
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private ProductDao productRepository;
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public void setProductRepository(ProductDaoImpl productDao) {
+        this.productRepository = productDao;
     }
 
     public List<Product> findAll(){
