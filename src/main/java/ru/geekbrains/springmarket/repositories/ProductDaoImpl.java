@@ -58,4 +58,14 @@ public class ProductDaoImpl implements ProductDao{
             return products;
         }
     }
+
+    @Override
+    public Product saveOrUpdate(Product product) {
+        try (Session session = sessionFactoryUtils.getSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(product);
+            session.getTransaction().commit();
+            return product;
+        }
+    }
 }

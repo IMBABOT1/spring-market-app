@@ -35,5 +35,7 @@ public class ProductService {
     public void changePrice(Long id, Integer delta) {
         Product p = productRepository.findProductById(id);
         p.setPrice(p.getPrice() + delta);
+        productRepository.saveOrUpdate(p);
+
     }
 }

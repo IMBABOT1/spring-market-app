@@ -51,4 +51,9 @@ public class InMemProductRepository implements ProductDao {
     public List<Product> findAll(){
         return Collections.unmodifiableList(products);
     }
+
+    @Override
+    public Product saveOrUpdate(Product product) {
+        throw new UnsupportedOperationException();
+    }
 }
