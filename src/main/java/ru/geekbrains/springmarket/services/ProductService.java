@@ -43,4 +43,7 @@ public class ProductService {
         product.setPrice(product.getPrice() + delta);
     }
 
+    public void save(Product product) {
+        productRepository.save(product);
+    }
 }

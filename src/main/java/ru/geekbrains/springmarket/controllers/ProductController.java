@@ -1,10 +1,7 @@
 package ru.geekbrains.springmarket.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springmarket.entities.Product;
 import ru.geekbrains.springmarket.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springmarket.services.ProductService;
@@ -47,6 +44,8 @@ public class ProductController {
     public void changePrice(@RequestParam Long productId, @RequestParam Integer delta) {
         productService.changeScore(productId, delta);
     }
+
+
 
 }
 
