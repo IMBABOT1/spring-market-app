@@ -34,7 +34,7 @@ public class ProductController {
         productService.deleteById(id);
     }
 
-    @GetMapping("/products/score_between")
+    @PostMapping("/products/score_between")
     public List<Product> findStudentsByScoreBetween(@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "100") Integer max) {
         return productService.findByScoreBetween(min, max);
     }
@@ -44,8 +44,6 @@ public class ProductController {
     public void changePrice(@RequestParam Long productId, @RequestParam Integer delta) {
         productService.changeScore(productId, delta);
     }
-
-
 
 }
 

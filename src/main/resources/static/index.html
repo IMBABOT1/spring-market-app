@@ -37,6 +37,18 @@
             </td>
         </tr>
         </tbody>
+
+
+        <p></p>
+        <h3>Фильтр</h3>
+        <form novalidate ng-submit="loadProducts()">
+            <input class="form-control" type="number" placeholder="min" ng-model="filtr.min">
+            <p></p>
+            <input class="form-control" type="number" placeholder="max" ng-model="filtr.max">
+            <p></p>
+            <button type="submit" class="btn btn-primary">Фильтр</button>
+        </form>
+
     </table>
 
 
