@@ -2,10 +2,14 @@ package ru.geekbrains.springmarket.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.springmarket.entities.Product;
 import ru.geekbrains.springmarket.exceptions.ResourceNotFoundException;
 import ru.geekbrains.springmarket.repositories.ProductRepository;
+import ru.geekbrains.springmarket.repositories.specifications.ProductsSpecifications;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -19,8 +23,19 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> find(Integer minPrice, Integer maxPrice, String titlePart, Integer page) {
+        Specification<Product> spec = Specification.where(null);
+        if (minPrice != null) {
+            spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
+        }
+        if (maxPrice != null) {
+            spec = spec.and(ProductsSpecifications.priceLessThanOrEqualsThan(maxPrice));
+        }
+        if (titlePart != null) {
+            spec = spec.and(ProductsSpecifications.titleLike(titlePart));
+        }
+
+        return productRepository.findAll(spec, PageRequest.of(page - 1, 5));
     }
 
 

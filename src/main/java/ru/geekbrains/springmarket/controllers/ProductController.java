@@ -1,6 +1,7 @@
 package ru.geekbrains.springmarket.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springmarket.entities.Product;
 import ru.geekbrains.springmarket.exceptions.ResourceNotFoundException;
@@ -19,9 +20,18 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> findAll() {
-        return productService.findAll();
+    public Page<Product> getAllStudents(
+            @RequestParam(name = "p", defaultValue = "1") Integer page,
+            @RequestParam(name = "min_price", required = false) Integer minPrice,
+            @RequestParam(name = "max_price", required = false) Integer maxPrice,
+            @RequestParam(name = "title_part", required = false) String titlePart
+    ) {
+        if (page < 1) {
+            page = 1;
+        }
+        return productService.find(minPrice, maxPrice, titlePart, page);
     }
+
 
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
