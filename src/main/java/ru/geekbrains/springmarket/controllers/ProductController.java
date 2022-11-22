@@ -10,6 +10,7 @@ import ru.geekbrains.springmarket.services.ProductService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/products")
 public class ProductController {
 
     private ProductService productService;
@@ -19,7 +20,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
+    @GetMapping
     public Page<Product> getAllStudents(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
             @RequestParam(name = "min_price", required = false) Integer minPrice,
@@ -33,24 +34,20 @@ public class ProductController {
     }
 
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) {
         return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
     }
 
 
-    @GetMapping("/products/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
 
-    @PostMapping("/products/score_between")
-    public List<Product> findStudentsByScoreBetween(@RequestParam(defaultValue = "0") Integer min, @RequestParam(defaultValue = "100") Integer max) {
-        return productService.findByScoreBetween(min, max);
-    }
 
 
-    @GetMapping("/products/change_price")
+    @GetMapping("/change_price")
     public void changePrice(@RequestParam Long productId, @RequestParam Integer delta) {
         productService.changeScore(productId, delta);
     }
