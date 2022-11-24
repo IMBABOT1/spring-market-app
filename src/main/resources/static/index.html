@@ -62,6 +62,31 @@
         <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
     </form>
 
+    <p></p>
+
+    <form novalidate ng-submit="register()">
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="userName" placeholder="" ng-model="user.name">
+            <label for="userName">Name</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="password" class="form-control" id="userPassword" placeholder="" ng-model="user.pass">
+            <label for="userPassword">Password</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="userEmail" placeholder="" ng-model="user.email">
+            <label for="userEmail">email</label>
+        </div>
+        <p></p>
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Register</button>
+    </form>
+
+
+
+
+
     <h3>Каталог товаров</h3>
     <table class="table table-hover">
         <tr>
@@ -78,6 +103,10 @@
 
         </tbody>
     </table>
+
+    <p></p>
+
+
 
     <button class="btn btn-danger" ng-click="showCurrentUserInfo()">Обо мне</button>
 </div>

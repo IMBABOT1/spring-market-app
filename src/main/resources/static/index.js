@@ -19,6 +19,25 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         });
     };
 
+
+    $scope.register = function () {
+        $http({
+            url: contextPath + '/users',
+            method: 'POST',
+            params: {
+                name: $scope.user ? $scope.user.name : null,
+                pass: $scope.user ? $scope.user.pass : null,
+                email: $scope.user ? $scope.user.email : null
+            }
+        }).then(function (response) {
+
+            $scope.user.name = null;
+            $scope.user.pass = null;
+            $scope.user.email = null;
+
+        });
+    }
+
     $scope.tryToAuth = function () {
         $http.post('http://localhost:8189/app/auth', $scope.user)
             .then(function successCallback(response) {
