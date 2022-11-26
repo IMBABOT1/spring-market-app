@@ -19,23 +19,25 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         });
     };
 
+    $scope.addToCart = function (productId) {
+        $http.get('http://localhost:8189/app/api/v1/carts/add/' + productId)
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
 
-    $scope.register = function () {
-        $http({
-            url: contextPath + '/users',
-            method: 'POST',
-            params: {
-                name: $scope.user ? $scope.user.name : null,
-                pass: $scope.user ? $scope.user.pass : null,
-                email: $scope.user ? $scope.user.email : null
-            }
-        }).then(function (response) {
+    $scope.clearCart = function () {
+        $http.get('http://localhost:8189/app/api/v1/carts/clear')
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
 
-            $scope.user.name = null;
-            $scope.user.pass = null;
-            $scope.user.email = null;
-
-        });
+    $scope.loadCart = function () {
+        $http.get('http://localhost:8189/app/api/v1/carts')
+            .then(function (response) {
+                $scope.Cart = response.data;
+            });
     }
 
     $scope.tryToAuth = function () {
@@ -85,4 +87,5 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     }
 
     $scope.loadProducts();
+    $scope.loadCart();
 });

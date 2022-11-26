@@ -62,53 +62,53 @@
         <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
     </form>
 
-    <p></p>
-
-    <form novalidate ng-submit="register()">
-        <div class="form-floating input-group-sm">
-            <input type="text" class="form-control" id="userName" placeholder="" ng-model="user.name">
-            <label for="userName">Name</label>
-        </div>
-        <p></p>
-        <div class="form-floating input-group-sm">
-            <input type="password" class="form-control" id="userPassword" placeholder="" ng-model="user.pass">
-            <label for="userPassword">Password</label>
-        </div>
-        <p></p>
-        <div class="form-floating input-group-sm">
-            <input type="text" class="form-control" id="userEmail" placeholder="" ng-model="user.email">
-            <label for="userEmail">email</label>
-        </div>
-        <p></p>
-        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Register</button>
-    </form>
-
-
-
-
-
     <h3>Каталог товаров</h3>
     <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Название</td>
             <td>Цена</td>
+            <td></td>
         </tr>
         <tbody>
         <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+            </td>
         </tr>
-
         </tbody>
     </table>
 
-    <p></p>
-
-
-
-    <button class="btn btn-danger" ng-click="showCurrentUserInfo()">Обо мне</button>
+    <h3>Корзина</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>Название товара</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="item in Cart.items">
+            <td>{{item.productTitle}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Итого</td>
+            <td>{{Cart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>
+        <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
+        <button class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>
+    </p>
+    <p>
+        <button class="btn btn-danger" ng-click="showCurrentUserInfo()">Обо мне</button>
+    </p>
 </div>
 
 </body>
