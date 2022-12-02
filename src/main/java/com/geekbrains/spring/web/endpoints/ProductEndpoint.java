@@ -29,11 +29,12 @@ public class ProductEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductByIdRequest")
     @ResponsePayload
-    public GetProductByIdResponse getStudentByName(@RequestPayload GetProductByIdRequest request) {
+    public GetProductByIdResponse getProductByIdResponse(@RequestPayload GetProductByIdRequest request) {
+
         GetProductByIdResponse response = new GetProductByIdResponse();
         Optional<Product> optional = productsService.findById(request.getId());
         if (optional.isPresent()){
-            response.setProduct(productConverter.soapDtoToEntity(optional.get()));
+            response.setProduct(productConverter.productToSoapDto(optional.get()));
         }
 
         return response;
@@ -53,9 +54,9 @@ public class ProductEndpoint {
         </soapenv:Envelope>
      */
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllStudentsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
-    public GetAllProductsResponse getAllStudents(@RequestPayload GetAllProductsRequest request,
+    public GetAllProductsResponse getAllProductsResponse(@RequestPayload GetAllProductsRequest request,
                                                  @RequestParam(name = "p", defaultValue = "1") Integer page,
                                                  @RequestParam(name = "min_price", required = false) Integer minPrice,
                                                  @RequestParam(name = "max_price", required = false) Integer maxPrice,
@@ -63,10 +64,14 @@ public class ProductEndpoint {
                                                  @RequestParam(name = "category", required = false) String category
 
     ) {
+
+        System.out.println(request);
+
+
         GetAllProductsResponse response = new GetAllProductsResponse();
         Page<Product> products = productsService.findAll(minPrice, maxPrice, titlePart, page, category);
         for (Product p : products.toList()){
-            response.getProducts().add(productConverter.soapDtoToEntity(p));
+            response.getProducts().add(productConverter.productToSoapDto(p));
         }
 
         return response;

@@ -26,7 +26,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
     // http://localhost:8080/ws/products.wsdl
     @Bean(name = "products")
-    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema productsSchema) {
+    public DefaultWsdl11Definition productsWsdDefinition(XsdSchema productsSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ProductsPort");
         wsdl11Definition.setLocationUri("/ws");

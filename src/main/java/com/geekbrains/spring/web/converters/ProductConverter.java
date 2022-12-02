@@ -14,7 +14,7 @@ public class ProductConverter {
         return new ProductDto(product.getId(), product.getTitle(), product.getPrice(), product.getCategory().getTitle());
     }
 
-    public com.geekbrains.spring.web.soap.Product soapDtoToEntity(Product product) {
+    public com.geekbrains.spring.web.soap.Product productToSoapDto(Product product) {
         com.geekbrains.spring.web.soap.Product p = new com.geekbrains.spring.web.soap.Product();
         p.setCategory(product.getCategory().getTitle());
         p.setPrice(product.getPrice());
