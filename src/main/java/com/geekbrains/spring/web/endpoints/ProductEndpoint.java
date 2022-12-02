@@ -17,6 +17,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,7 +34,7 @@ public class ProductEndpoint {
 
         GetProductByIdResponse response = new GetProductByIdResponse();
         Optional<Product> optional = productsService.findById(request.getId());
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             response.setProduct(productConverter.productToSoapDto(optional.get()));
         }
 
@@ -54,26 +55,15 @@ public class ProductEndpoint {
         </soapenv:Envelope>
      */
 
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
-    public GetAllProductsResponse getAllProductsResponse(@RequestPayload GetAllProductsRequest request,
-                                                 @RequestParam(name = "p", defaultValue = "1") Integer page,
-                                                 @RequestParam(name = "min_price", required = false) Integer minPrice,
-                                                 @RequestParam(name = "max_price", required = false) Integer maxPrice,
-                                                 @RequestParam(name = "title_part", required = false) String titlePart,
-                                                 @RequestParam(name = "category", required = false) String category
-
-    ) {
-
-        System.out.println(request);
-
-
+    public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
-        Page<Product> products = productsService.findAll(minPrice, maxPrice, titlePart, page, category);
-        for (Product p : products.toList()){
+        List<Product> products = productsService.findAll();
+        for (Product p : products) {
             response.getProducts().add(productConverter.productToSoapDto(p));
         }
-
         return response;
     }
 }
