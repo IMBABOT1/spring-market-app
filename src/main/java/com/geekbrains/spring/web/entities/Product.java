@@ -42,4 +42,12 @@ public class Product {
         this.title = title;
         this.price = price;
     }
+
+    public Product(Long id, String title, Integer price, String category) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.category.setTitle(category);
+
+    }
 }

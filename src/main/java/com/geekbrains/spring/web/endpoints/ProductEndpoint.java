@@ -1,6 +1,7 @@
 package com.geekbrains.spring.web.endpoints;
 
 
+import com.geekbrains.spring.web.converters.ProductConverter;
 import com.geekbrains.spring.web.entities.Product;
 import com.geekbrains.spring.web.services.ProductsService;
 import com.geekbrains.spring.web.soap.GetAllProductsRequest;
@@ -16,7 +17,6 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 
-
 import java.util.Optional;
 
 
@@ -25,15 +25,17 @@ import java.util.Optional;
 public class ProductEndpoint {
     private static final String NAMESPACE_URI = "http://www.geekbrains.com/spring/ws/products";
     private final ProductsService productsService;
+    private final ProductConverter productConverter;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductByIdRequest")
     @ResponsePayload
     public GetProductByIdResponse getStudentByName(@RequestPayload GetProductByIdRequest request) {
         GetProductByIdResponse response = new GetProductByIdResponse();
         Optional<Product> optional = productsService.findById(request.getId());
-        if (optional.isPresent()) {
-            response.setProduct(optional.get());
+        if (optional.isPresent()){
+            response.setProduct(productConverter.soapDtoToEntity(optional.get()));
         }
+
         return response;
     }
 
@@ -51,9 +53,9 @@ public class ProductEndpoint {
         </soapenv:Envelope>
      */
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllStudentsRequest")
     @ResponsePayload
-    public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request,
+    public GetAllProductsResponse getAllStudents(@RequestPayload GetAllProductsRequest request,
                                                  @RequestParam(name = "p", defaultValue = "1") Integer page,
                                                  @RequestParam(name = "min_price", required = false) Integer minPrice,
                                                  @RequestParam(name = "max_price", required = false) Integer maxPrice,
@@ -63,9 +65,10 @@ public class ProductEndpoint {
     ) {
         GetAllProductsResponse response = new GetAllProductsResponse();
         Page<Product> products = productsService.findAll(minPrice, maxPrice, titlePart, page, category);
-        for (Product p : products) {
-            response.getProducts().add(p);
+        for (Product p : products.toList()){
+            response.getProducts().add(productConverter.soapDtoToEntity(p));
         }
+
         return response;
     }
 }
