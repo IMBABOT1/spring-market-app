@@ -1,6 +1,7 @@
-package com.geekbrains.spring.web.core.controllers;
+package com.geekbrains.spring.web.cart.controllers;
 
 import com.geekbrains.spring.web.api.dto.StringResponse;
+import com.geekbrains.spring.web.cart.dto.Cart;
 import com.geekbrains.spring.web.core.dto.Cart;
 import com.geekbrains.spring.web.core.services.CartService;
 import com.geekbrains.spring.web.core.services.ProductsService;
